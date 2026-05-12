@@ -1,178 +1,216 @@
 import { useState } from "react";
 import Icon from "@/components/ui/icon";
 
-const HERO_IMAGE = "https://cdn.poehali.dev/projects/dbb74ed7-cf29-47db-849a-52a83d20944a/files/d7c07202-2294-4a40-a25a-83067f4afb66.jpg";
+const HERO_IMAGE =
+  "https://cdn.poehali.dev/projects/dbb74ed7-cf29-47db-849a-52a83d20944a/files/b3341c54-0323-4d35-b172-9a337051f5df.jpg";
 
 const CATEGORIES = [
-  { emoji: "🌸", label: "Уход за кожей" },
-  { emoji: "💐", label: "Ароматы" },
-  { emoji: "🎀", label: "Подарки" },
-  { emoji: "🕯️", label: "Свечи" },
-  { emoji: "🌿", label: "Натуральное" },
+  { icon: "BookOpen", label: "Права и льготы", color: "hsl(210,55%,93%)", text: "hsl(210,55%,35%)" },
+  { icon: "Heart", label: "Психологическая поддержка", color: "hsl(10,60%,90%)", text: "hsl(10,50%,38%)" },
+  { icon: "Activity", label: "Реабилитация", color: "hsl(160,40%,88%)", text: "hsl(160,40%,28%)" },
+  { icon: "GraduationCap", label: "Образование", color: "hsl(36,60%,88%)", text: "hsl(36,45%,32%)" },
+  { icon: "Users", label: "Сообщество", color: "hsl(270,35%,90%)", text: "hsl(270,35%,35%)" },
+  { icon: "Stethoscope", label: "Медицина", color: "hsl(190,50%,88%)", text: "hsl(190,45%,30%)" },
 ];
 
-const PRODUCTS = [
+const ARTICLES = [
   {
     id: 1,
-    name: "Розовая вода",
-    desc: "Тонизирующий спрей для лица с лепестками дамасской розы",
-    price: "1 290 ₽",
-    oldPrice: "1 590 ₽",
-    tag: "Хит",
-    tagColor: "bg-pink-100 text-rose-600",
-    bg: "from-pink-50 to-rose-50",
-    emoji: "🌹",
+    cat: "Права и льготы",
+    catColor: "hsl(210,55%,93%)",
+    catText: "hsl(210,55%,35%)",
+    title: "Какие льготы положены семьям с детьми-инвалидами в 2026 году",
+    desc: "Полный список федеральных и региональных льгот: транспорт, коммунальные услуги, санаторно-курортное лечение и многое другое.",
+    time: "8 мин",
+    date: "10 мая 2026",
   },
   {
     id: 2,
-    name: "Лавандовый крем",
-    desc: "Нежный ночной крем с экстрактом прованской лаванды",
-    price: "2 100 ₽",
-    tag: "Новинка",
-    tagColor: "bg-purple-100 text-purple-600",
-    bg: "from-purple-50 to-violet-50",
-    emoji: "💜",
+    cat: "Психологическая поддержка",
+    catColor: "hsl(10,60%,90%)",
+    catText: "hsl(10,50%,38%)",
+    title: "Как говорить с ребёнком о его диагнозе: советы психолога",
+    desc: "Открытый разговор помогает детям принять себя и строить доверие с родителями. Практические рекомендации от детских психологов.",
+    time: "6 мин",
+    date: "7 мая 2026",
   },
   {
     id: 3,
-    name: "Персиковый скраб",
-    desc: "Мягкий сахарный скраб с маслом персиковых косточек",
-    price: "890 ₽",
-    tag: "–30%",
-    tagColor: "bg-orange-100 text-orange-600",
-    bg: "from-orange-50 to-amber-50",
-    emoji: "🍑",
+    cat: "Реабилитация",
+    catColor: "hsl(160,40%,88%)",
+    catText: "hsl(160,40%,28%)",
+    title: "Лучшие методики реабилитации для детей с ДЦП в 2026 году",
+    desc: "Обзор современных подходов: Войта-терапия, иппотерапия, АФК и нейростимуляция. Что выбрать и как получить бесплатно.",
+    time: "12 мин",
+    date: "3 мая 2026",
   },
   {
     id: 4,
-    name: "Свеча «Пион»",
-    desc: "Соевая свеча с нотами свежего пиона и белого чая",
-    price: "1 450 ₽",
-    tag: "Эко",
-    tagColor: "bg-green-100 text-green-700",
-    bg: "from-green-50 to-emerald-50",
-    emoji: "🕯️",
+    cat: "Образование",
+    catColor: "hsl(36,60%,88%)",
+    catText: "hsl(36,45%,32%)",
+    title: "Инклюзивное образование: права ребёнка в школе",
+    desc: "Как добиться создания специальных условий обучения, что такое АООП и как работать с педагогами и администрацией школы.",
+    time: "9 мин",
+    date: "28 апр 2026",
   },
   {
     id: 5,
-    name: "Мист для тела",
-    desc: "Лёгкий увлажняющий спрей с ароматом жасмина",
-    price: "1 190 ₽",
-    tag: "Хит",
-    tagColor: "bg-pink-100 text-rose-600",
-    bg: "from-sky-50 to-blue-50",
-    emoji: "✨",
+    cat: "Сообщество",
+    catColor: "hsl(270,35%,90%)",
+    catText: "hsl(270,35%,35%)",
+    title: "«Мы не одни»: истории семей, которые нашли поддержку",
+    desc: "Три истории родителей из разных городов России о том, как родительские сообщества помогли им справиться с трудностями.",
+    time: "7 мин",
+    date: "22 апр 2026",
   },
   {
     id: 6,
-    name: "Подарочный набор",
-    desc: "Набор из трёх миниатюр: роза, лаванда, пион",
-    price: "2 990 ₽",
-    tag: "Подарок",
-    tagColor: "bg-blue-100 text-blue-600",
-    bg: "from-pink-50 to-purple-50",
-    emoji: "🎁",
+    cat: "Медицина",
+    catColor: "hsl(190,50%,88%)",
+    catText: "hsl(190,45%,30%)",
+    title: "Как получить технические средства реабилитации бесплатно",
+    desc: "Пошаговая инструкция: от направления врача до получения кресла-коляски или протеза через ФСС. Что делать при отказе.",
+    time: "10 мин",
+    date: "15 апр 2026",
   },
 ];
 
-const FEATURES = [
-  { icon: "Leaf", title: "100% натуральный состав", desc: "Только природные ингредиенты без парабенов" },
-  { icon: "Heart", title: "Протестировано дерматологами", desc: "Безопасно для чувствительной кожи" },
-  { icon: "Package", title: "Бесплатная доставка", desc: "При заказе от 2000 ₽ по всей России" },
-  { icon: "RotateCcw", title: "Возврат 14 дней", desc: "Без лишних вопросов" },
+const RESOURCES = [
+  { icon: "Phone", title: "Горячая линия", desc: "8-800-2000-122 — бесплатно для детей и родителей", color: "hsl(160,40%,88%)" },
+  { icon: "FileText", title: "Образцы документов", desc: "Заявления, жалобы, согласия — готовые шаблоны", color: "hsl(210,55%,93%)" },
+  { icon: "Map", title: "Реабилитационные центры", desc: "Карта центров по всей России с отзывами", color: "hsl(36,60%,88%)" },
+  { icon: "MessageCircle", title: "Группы поддержки", desc: "Онлайн-сообщества для родителей по диагнозам", color: "hsl(10,60%,90%)" },
 ];
 
 export default function Index() {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
-  const [cartCount, setCartCount] = useState(0);
 
-  const addToCart = () => setCartCount((c) => c + 1);
+  const filtered = activeCategory
+    ? ARTICLES.filter((a) => a.cat === activeCategory)
+    : ARTICLES;
 
   return (
-    <div className="min-h-screen" style={{ background: "hsl(340, 30%, 98%)" }}>
+    <div className="min-h-screen" style={{ background: "hsl(36, 30%, 97%)" }}>
+
       {/* Navbar */}
-      <nav className="sticky top-0 z-50 backdrop-blur-md bg-white/70 border-b border-rose-100">
+      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b" style={{ borderColor: "hsl(210,20%,90%)" }}>
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="text-2xl">🌸</span>
-            <span className="font-display text-2xl font-light tracking-wide text-rose-800">
-              Petal
-            </span>
+            <div className="w-9 h-9 rounded-xl flex items-center justify-center text-white text-sm font-bold"
+              style={{ background: "hsl(210,55%,48%)" }}>
+              ОР
+            </div>
+            <div>
+              <div className="font-display text-base font-bold leading-tight" style={{ color: "hsl(220,20%,18%)" }}>
+                Особый ребёнок
+              </div>
+              <div className="font-body text-xs" style={{ color: "hsl(220,10%,55%)" }}>
+                портал для родителей
+              </div>
+            </div>
           </div>
 
-          <div className="hidden md:flex items-center gap-8">
-            {["Каталог", "О нас", "Доставка", "Контакты"].map((item) => (
+          <div className="hidden md:flex items-center gap-7">
+            {["Статьи", "Льготы", "Реабилитация", "Сообщество"].map((item) => (
               <button
                 key={item}
-                className="font-body text-sm text-rose-700/70 hover:text-rose-800 transition-colors duration-200"
+                className="font-body text-sm transition-colors duration-200 hover:text-blue-600"
+                style={{ color: "hsl(220,15%,40%)" }}
               >
                 {item}
               </button>
             ))}
           </div>
 
-          <div className="flex items-center gap-4">
-            <button className="relative p-2 hover:bg-rose-50 rounded-full transition-colors">
-              <Icon name="ShoppingBag" size={20} className="text-rose-700" />
-              {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-rose-400 text-white text-xs rounded-full flex items-center justify-center font-body">
-                  {cartCount}
-                </span>
-              )}
-            </button>
-            <button className="p-2 hover:bg-rose-50 rounded-full transition-colors">
-              <Icon name="Search" size={20} className="text-rose-700" />
-            </button>
-          </div>
+          <button
+            className="font-body text-sm px-5 py-2 rounded-xl text-white transition-all duration-200 hover:opacity-90 hover:scale-105"
+            style={{ background: "hsl(210,55%,48%)" }}
+          >
+            Задать вопрос
+          </button>
         </div>
       </nav>
 
       {/* Hero */}
-      <section className="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-center">
+      <section className="max-w-6xl mx-auto px-6 py-14 grid md:grid-cols-2 gap-14 items-center">
         <div className="animate-fade-in-up">
           <span
-            className="inline-block px-4 py-1.5 rounded-full text-xs font-body font-medium tracking-widest uppercase mb-6"
-            style={{ background: "hsl(340, 60%, 88%)", color: "#be185d" }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full font-body text-xs font-medium tracking-wide uppercase mb-6"
+            style={{ background: "hsl(160,40%,88%)", color: "hsl(160,40%,25%)" }}
           >
-            Новая коллекция 2026
+            <Icon name="Heart" size={13} /> Вы не одни в этом пути
           </span>
-          <h1 className="font-display text-5xl md:text-6xl font-light leading-tight text-rose-900 mb-6">
-            Забота о себе —<br />
-            <em>это искусство</em>
+          <h1 className="font-display text-4xl md:text-5xl font-bold mb-5 leading-snug"
+            style={{ color: "hsl(220,20%,16%)" }}>
+            Всё необходимое —<br />
+            <span style={{ color: "hsl(210,55%,48%)" }}>в одном месте</span>
           </h1>
-          <p className="font-body text-base text-rose-700/70 leading-relaxed mb-10 max-w-md">
-            Натуральная косметика с деликатными ароматами и нежными текстурами. Создано для тех, кто ценит красоту в мелочах.
+          <p className="font-body text-base leading-relaxed mb-8 max-w-md"
+            style={{ color: "hsl(220,12%,42%)" }}>
+            Практические советы, актуальная информация о льготах, методиках реабилитации и правах ваших детей — доступно и без лишних слов.
           </p>
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-3">
             <button
-              className="px-8 py-3.5 rounded-2xl font-body text-sm font-medium text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
-              style={{ background: "hsl(340, 45%, 65%)" }}
+              className="font-body text-sm px-7 py-3 rounded-xl text-white font-medium transition-all duration-200 hover:opacity-90 hover:scale-105 shadow-md"
+              style={{ background: "hsl(210,55%,48%)" }}
             >
-              Смотреть каталог
+              Найти статью
             </button>
-            <button className="px-8 py-3.5 rounded-2xl font-body text-sm font-medium text-rose-700 border border-rose-200 hover:border-rose-300 hover:bg-rose-50 transition-all duration-200">
-              Подборки
+            <button
+              className="font-body text-sm px-7 py-3 rounded-xl font-medium border transition-all duration-200 hover:bg-blue-50"
+              style={{ color: "hsl(210,55%,42%)", borderColor: "hsl(210,45%,78%)" }}
+            >
+              Задать вопрос юристу
             </button>
+          </div>
+
+          {/* Stats */}
+          <div className="flex gap-8 mt-10">
+            {[
+              { val: "1 200+", label: "статей" },
+              { val: "48 000", label: "читателей" },
+              { val: "12", label: "экспертов" },
+            ].map((s) => (
+              <div key={s.label}>
+                <div className="font-display text-2xl font-bold" style={{ color: "hsl(210,55%,42%)" }}>
+                  {s.val}
+                </div>
+                <div className="font-body text-xs" style={{ color: "hsl(220,10%,55%)" }}>
+                  {s.label}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
         <div className="animate-fade-in-up delay-300 relative">
           <div
-            className="absolute inset-0 rounded-[2.5rem]"
-            style={{ background: "hsl(270, 40%, 88%)", transform: "rotate(-3deg)", opacity: 0.5 }}
+            className="absolute inset-0 rounded-3xl"
+            style={{ background: "hsl(210,55%,88%)", transform: "rotate(2deg)", opacity: 0.4 }}
           />
           <img
             src={HERO_IMAGE}
-            alt="Нежные продукты"
-            className="relative rounded-[2.5rem] w-full object-cover shadow-xl animate-float"
-            style={{ height: "420px" }}
+            alt="Родитель с ребёнком"
+            className="relative rounded-3xl w-full object-cover shadow-xl"
+            style={{ height: "400px" }}
           />
-          <div className="absolute -bottom-4 -left-4 bg-white rounded-2xl px-5 py-3 shadow-lg border border-rose-100">
-            <div className="flex items-center gap-2">
-              <span className="text-xl">⭐</span>
+          <div
+            className="absolute -bottom-4 -right-4 bg-white rounded-2xl px-5 py-3.5 shadow-lg border"
+            style={{ borderColor: "hsl(210,20%,90%)" }}
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center"
+                style={{ background: "hsl(160,40%,88%)" }}>
+                <Icon name="ShieldCheck" size={20} className="text-green-700" />
+              </div>
               <div>
-                <div className="font-display text-lg font-semibold text-rose-900">4.9</div>
-                <div className="font-body text-xs text-rose-500">2 400+ отзывов</div>
+                <div className="font-body text-sm font-semibold" style={{ color: "hsl(220,20%,18%)" }}>
+                  Проверено юристом
+                </div>
+                <div className="font-body text-xs" style={{ color: "hsl(220,10%,55%)" }}>
+                  Все материалы актуальны
+                </div>
               </div>
             </div>
           </div>
@@ -180,134 +218,167 @@ export default function Index() {
       </section>
 
       {/* Categories */}
-      <section className="max-w-6xl mx-auto px-6 py-10">
+      <section className="max-w-6xl mx-auto px-6 py-6">
         <div className="flex gap-3 flex-wrap">
-          {CATEGORIES.map((cat, i) => (
+          <button
+            onClick={() => setActiveCategory(null)}
+            className="font-body text-sm px-5 py-2.5 rounded-xl border transition-all duration-200 hover:scale-105"
+            style={{
+              background: !activeCategory ? "hsl(210,55%,48%)" : "white",
+              color: !activeCategory ? "white" : "hsl(220,15%,40%)",
+              borderColor: !activeCategory ? "transparent" : "hsl(210,20%,88%)",
+            }}
+          >
+            Все темы
+          </button>
+          {CATEGORIES.map((cat) => (
             <button
               key={cat.label}
               onClick={() => setActiveCategory(activeCategory === cat.label ? null : cat.label)}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-2xl font-body text-sm transition-all duration-200 hover:scale-105 border animate-fade-in-up"
+              className="flex items-center gap-2 font-body text-sm px-5 py-2.5 rounded-xl border transition-all duration-200 hover:scale-105"
               style={{
-                animationDelay: `${i * 0.07}s`,
-                background: activeCategory === cat.label ? "hsl(340, 45%, 65%)" : "white",
-                color: activeCategory === cat.label ? "white" : "hsl(340, 25%, 40%)",
-                borderColor: activeCategory === cat.label ? "transparent" : "hsl(340, 25%, 90%)",
+                background: activeCategory === cat.label ? "hsl(210,55%,48%)" : "white",
+                color: activeCategory === cat.label ? "white" : "hsl(220,15%,40%)",
+                borderColor: activeCategory === cat.label ? "transparent" : "hsl(210,20%,88%)",
               }}
             >
-              <span>{cat.emoji}</span>
+              <Icon name={cat.icon} size={14} />
               {cat.label}
             </button>
           ))}
         </div>
       </section>
 
-      {/* Products */}
-      <section className="max-w-6xl mx-auto px-6 py-8 pb-20">
-        <div className="flex items-end justify-between mb-10">
-          <h2 className="font-display text-4xl font-light text-rose-900">Популярное</h2>
-          <button className="font-body text-sm text-rose-500 hover:text-rose-700 transition-colors underline underline-offset-4">
-            Все товары
+      {/* Articles */}
+      <section className="max-w-6xl mx-auto px-6 py-8 pb-16">
+        <div className="flex items-end justify-between mb-8">
+          <h2 className="font-display text-3xl font-bold" style={{ color: "hsl(220,20%,16%)" }}>
+            {activeCategory ?? "Последние статьи"}
+          </h2>
+          <button className="font-body text-sm underline underline-offset-4 transition-colors hover:opacity-70"
+            style={{ color: "hsl(210,55%,48%)" }}>
+            Все статьи
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {PRODUCTS.map((product, i) => (
-            <div
-              key={product.id}
-              className={`animate-scale-in group relative bg-gradient-to-br ${product.bg} rounded-3xl p-6 border border-white/80 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1`}
-              style={{ animationDelay: `${i * 0.08}s` }}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filtered.map((article, i) => (
+            <article
+              key={article.id}
+              className="animate-scale-in bg-white rounded-2xl p-6 border hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer group"
+              style={{ borderColor: "hsl(210,20%,90%)", animationDelay: `${i * 0.07}s` }}
             >
-              <span className={`inline-block px-3 py-1 rounded-full text-xs font-body font-medium ${product.tagColor} mb-4`}>
-                {product.tag}
+              <span
+                className="inline-block font-body text-xs font-medium px-3 py-1 rounded-full mb-4"
+                style={{ background: article.catColor, color: article.catText }}
+              >
+                {article.cat}
               </span>
-
-              <div className="flex items-center justify-center h-28 text-6xl mb-4 transition-transform duration-300 group-hover:scale-110">
-                {product.emoji}
-              </div>
-
-              <h3 className="font-display text-xl font-medium text-rose-900 mb-1">{product.name}</h3>
-              <p className="font-body text-sm text-rose-700/60 leading-relaxed mb-4">{product.desc}</p>
-
-              <div className="flex items-center justify-between mt-auto">
-                <div>
-                  <span className="font-body text-lg font-medium text-rose-800">{product.price}</span>
-                  {product.oldPrice && (
-                    <span className="font-body text-sm text-rose-400 line-through ml-2">{product.oldPrice}</span>
-                  )}
+              <h3 className="font-display text-base font-bold leading-snug mb-3 group-hover:text-blue-600 transition-colors"
+                style={{ color: "hsl(220,20%,18%)" }}>
+                {article.title}
+              </h3>
+              <p className="font-body text-sm leading-relaxed mb-5"
+                style={{ color: "hsl(220,10%,48%)" }}>
+                {article.desc}
+              </p>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <span className="font-body text-xs" style={{ color: "hsl(220,10%,60%)" }}>{article.date}</span>
+                  <span className="font-body text-xs flex items-center gap-1" style={{ color: "hsl(220,10%,60%)" }}>
+                    <Icon name="Clock" size={12} /> {article.time}
+                  </span>
                 </div>
-                <button
-                  onClick={addToCart}
-                  className="w-10 h-10 rounded-2xl flex items-center justify-center text-white transition-all duration-200 hover:scale-110 active:scale-95 shadow-md"
-                  style={{ background: "hsl(340, 45%, 65%)" }}
-                >
-                  <Icon name="Plus" size={18} />
-                </button>
+                <Icon name="ArrowRight" size={16} className="text-blue-400 group-hover:translate-x-1 transition-transform" />
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </section>
 
-      {/* Features */}
-      <section className="bg-white/60 py-16 border-t border-rose-100">
+      {/* Resources */}
+      <section className="border-t py-16" style={{ background: "white", borderColor: "hsl(210,20%,90%)" }}>
         <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {FEATURES.map((f, i) => (
+          <div className="text-center mb-10">
+            <h2 className="font-display text-3xl font-bold mb-3" style={{ color: "hsl(220,20%,16%)" }}>
+              Быстрая помощь
+            </h2>
+            <p className="font-body text-sm" style={{ color: "hsl(220,10%,50%)" }}>
+              Самые нужные ресурсы — под рукой
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {RESOURCES.map((r, i) => (
               <div
-                key={f.title}
-                className="animate-fade-in-up text-center"
-                style={{ animationDelay: `${i * 0.1}s` }}
+                key={r.title}
+                className="animate-fade-in-up rounded-2xl p-6 cursor-pointer hover:scale-105 transition-all duration-200 border border-white/60"
+                style={{ background: r.color, animationDelay: `${i * 0.1}s` }}
               >
-                <div
-                  className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-3"
-                  style={{ background: "hsl(340, 60%, 88%)" }}
-                >
-                  <Icon name={f.icon} size={22} className="text-rose-600" />
+                <div className="w-11 h-11 rounded-xl bg-white/60 flex items-center justify-center mb-4">
+                  <Icon name={r.icon} size={22} className="text-slate-700" />
                 </div>
-                <h4 className="font-body text-sm font-medium text-rose-900 mb-1">{f.title}</h4>
-                <p className="font-body text-xs text-rose-500">{f.desc}</p>
+                <h4 className="font-body text-sm font-semibold mb-1" style={{ color: "hsl(220,20%,18%)" }}>
+                  {r.title}
+                </h4>
+                <p className="font-body text-xs leading-relaxed" style={{ color: "hsl(220,15%,38%)" }}>
+                  {r.desc}
+                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Banner */}
+      {/* CTA Banner */}
       <section className="max-w-6xl mx-auto px-6 py-16">
         <div
-          className="rounded-3xl p-10 md:p-14 text-center"
-          style={{
-            background: "linear-gradient(135deg, hsl(340,50%,90%), hsl(270,40%,88%), hsl(25,60%,88%))",
-          }}
+          className="rounded-3xl p-10 md:p-14 flex flex-col md:flex-row items-center gap-8"
+          style={{ background: "linear-gradient(135deg, hsl(210,55%,93%), hsl(160,40%,88%))" }}
         >
-          <p className="font-body text-xs tracking-widest uppercase text-rose-600 mb-3">Особое предложение</p>
-          <h2 className="font-display text-4xl md:text-5xl font-light text-rose-900 mb-4">
-            Скидка 15% на первый заказ
-          </h2>
-          <p className="font-body text-sm text-rose-700/70 mb-8 max-w-md mx-auto">
-            Введите промокод <strong>PETAL15</strong> при оформлении заказа
-          </p>
-          <button
-            className="px-10 py-3.5 rounded-2xl font-body text-sm font-medium text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
-            style={{ background: "hsl(340, 45%, 58%)" }}
-          >
-            Воспользоваться предложением
-          </button>
+          <div className="flex-1">
+            <h2 className="font-display text-3xl font-bold mb-3" style={{ color: "hsl(220,20%,16%)" }}>
+              Остались вопросы?
+            </h2>
+            <p className="font-body text-sm leading-relaxed" style={{ color: "hsl(220,15%,38%)" }}>
+              Наши юристы и специалисты по социальной защите ответят бесплатно. Просто опишите свою ситуацию.
+            </p>
+          </div>
+          <div className="flex flex-col gap-3 shrink-0">
+            <button
+              className="font-body text-sm px-8 py-3.5 rounded-xl text-white font-medium transition-all duration-200 hover:opacity-90 hover:scale-105 shadow-md whitespace-nowrap"
+              style={{ background: "hsl(210,55%,48%)" }}
+            >
+              Задать вопрос бесплатно
+            </button>
+            <button
+              className="font-body text-sm px-8 py-3 rounded-xl font-medium border bg-white/60 hover:bg-white transition-all duration-200 whitespace-nowrap"
+              style={{ color: "hsl(210,55%,40%)", borderColor: "hsl(210,40%,78%)" }}
+            >
+              Вступить в сообщество
+            </button>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-rose-100 py-10 bg-white/50">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <span className="text-xl">🌸</span>
-            <span className="font-display text-xl font-light text-rose-800">Petal</span>
+      <footer className="border-t py-10" style={{ borderColor: "hsl(210,20%,90%)", background: "white" }}>
+        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-5">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold"
+              style={{ background: "hsl(210,55%,48%)" }}>
+              ОР
+            </div>
+            <span className="font-display text-base font-bold" style={{ color: "hsl(220,20%,18%)" }}>
+              Особый ребёнок
+            </span>
           </div>
-          <p className="font-body text-xs text-rose-400">© 2026 Petal. Натуральная косметика с любовью.</p>
-          <div className="flex gap-6">
-            {["Instagram", "Telegram", "VK"].map((s) => (
-              <button key={s} className="font-body text-xs text-rose-400 hover:text-rose-600 transition-colors">
-                {s}
+          <p className="font-body text-xs" style={{ color: "hsl(220,10%,58%)" }}>
+            © 2026 — информационный портал для семей с детьми с инвалидностью
+          </p>
+          <div className="flex gap-5">
+            {["Политика конфиденциальности", "Контакты"].map((l) => (
+              <button key={l} className="font-body text-xs hover:underline" style={{ color: "hsl(210,55%,48%)" }}>
+                {l}
               </button>
             ))}
           </div>
